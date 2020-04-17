@@ -1,19 +1,54 @@
 ﻿@using RecruitmentQUIZ.Models
 
 @{
-    ViewBag.Title = "Home Page";
+	ViewBag.Title = "Home Page";
+}
+<style type="text/css">
+	p {
+		line-height: 25px;
+		letter-spacing: 1px;
+		word-spacing: 2px;
+	}
+</style>
+
+<h2>Lire attentivement !</h2>
+
+@{
+	var NbreQuestion = int.Parse(System.Configuration.ConfigurationManager.AppSettings["NbreQuestion"]);
+	var user = Session["user"] as RecruitmentQUIZ.Models.User;
+	string Libelprojet = string.Empty;
+	if (user.SecurityLevel.Libelle != "Admin")
+	{
+		Libelprojet = user.Projet.Libelle;
+	}
 }
 
-<h2>home page</h2>
-
-<h3>Here we describ the goal of this exam session</h3>
-
-@using (Html.BeginForm("Start","Home",FormMethod.Post))
+<p>Bonjour  <span>@user.Name</span></p>
+@if (!string.IsNullOrEmpty(Libelprojet))
 {
+	<p>Vous serez évalué à l'aide d'une suite de <b> @NbreQuestion question(s)</b> portant sur le projet <b>@Libelprojet</b>.</p>
+	<p>
+		Une fois  vous cliquez sur le bouton <input type="button" name="name" value="Start Exam" class="btn btn-primary small" /> , le system vous présentera la série de questions conçues pour vous évaluer.<br />
+		Pour le bon déroulé de votre session de test, voici des recommandations à suivre: <br />
+		<ol>
+		    <li>Une fois le test lancé, vous ne devez plus cliquer sur &laquo; Logout &raquo; pour vous deconecter .</li>
+			<li>Une fois le test lancé, il ne vous est pas permis de revenir en arrière à l'aide du bouton retour du navigateur <span class="alert-danger">&larr;</span> .</li>
+			<li>Une fois le test lancé, il ne vous est pas permis de rafraichir votre navigateur (la page).</li>
+			<li>Une fois le temps imparti au test terminé, le système ne prend en considération que les questions que vous avez traitées.</li>
+			<li>Vous ne pouvez pas reprendre le test une fois vous l'avez marqué comme terminé ou que le temps imparti au test soit terminé.</li>
+		</ol>
+	</p>
+	<p>Le système vous présentera en fin de test votre total de points cumulé.</p>
 
+	using (Html.BeginForm("Start", "Home", FormMethod.Post))
+	{
+		<input type="submit" name="name" value="Start Exam" formaction="/Home/Start" class="btn btn-primary" />
+	}
 
-
-    <input type="submit" name="name" value="Start Exam" formaction="/Home/Start" />
+}
+else
+{
+	@:<p>En tant qu'administrateur du système, vous êtes priés de bien vouloir enregistrer les questions et options de réponses pour les différents projets du système.</p>
 }
 
 

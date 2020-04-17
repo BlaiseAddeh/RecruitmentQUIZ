@@ -201,6 +201,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\images\avatar.png" />
+    <Content Include="Content\images\bk1.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -251,6 +254,7 @@
     <Content Include="Views\Home\Start.cshtml" />
     <Content Include="Views\Home\EndSection.cshtml" />
     <Content Include="Views\Home\ShowResume.cshtml" />
+    <Content Include="Views\Shared\_Layoutcnx.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,6 +7,28 @@
     <title>@ViewBag.Title - Mon application ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+     html, body { height: 100%; }
+     .container {min-height: 100%; overflow:hidden;}
+      body {
+            margin: 0;
+            padding: 0;
+            background: url('../../Content/images/bk1.jpg') no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        hr {
+          display:none;
+        }
+
+      footer {       
+         position: fixed;
+         bottom: 0;
+        }
+
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -17,14 +39,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nom d'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @*@Html.ActionLink("Quiz System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                <span class="navbar-brand">Quiz System</span>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                      <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                      <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                                        
+                        <li>@Html.ActionLink("À propos de", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+
 
                     @if (Session["user"] != null)
                     {
@@ -45,13 +68,14 @@
                 <ul class="nav navbar-nav navbar-right">
 
                     @if (Session["user"] != null)
-					{
-						var user = Session["user"] as RecruitmentQUIZ.Models.User;
+                    {
+                        var user = Session["user"] as RecruitmentQUIZ.Models.User;
 
                         <li>
-                            @Html.ActionLink("Hello " + user.Name, "", "")
+                            @*@Html.ActionLink("Hello " + user.Name, "", "")*@
+                            <a href="#">Hello @user.Name</a>
                         </li>
-                        <li>                           
+                        <li>
                             @Html.ActionLink("Logout", "Logout", "Login")
                         </li>
                     }
@@ -62,17 +86,20 @@
 
 
                 </ul>
-            </div>                   
+            </div>
         </div>
     </div>
-    <div class="container body-content">
-		
+    <div class="container body-content" style="background-color:white">
+
         @RenderBody()
+
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Mon application ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year - Quiz System</p>
         </footer>
+
     </div>
+   
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

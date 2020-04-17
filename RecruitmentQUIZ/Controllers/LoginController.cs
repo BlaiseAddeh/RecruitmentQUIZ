@@ -11,6 +11,7 @@ namespace RecruitmentQUIZ.Controllers
     public class LoginController : Controller
     {
         IUser iuser = new UserEntityFrameworkRepo();
+        IResultat iresultat = new ResultatEntityFrameworkRepo();
 
         // GET: Login
         public ActionResult Login()
@@ -43,6 +44,22 @@ namespace RecruitmentQUIZ.Controllers
 
         public ActionResult Logout()
         {
+            var us = Session["user"] as User;
+            var user = iuser.GetUser(us.Login, us.Password);
+
+            if (user.Resultat == null && Session["Load"] != null)
+            {
+                float TotalReponseChoix = 0;
+                Resultat resultat = new Resultat();
+                resultat.TotalPoint = 0;
+                resultat.TotalObtenu = TotalReponseChoix;
+                resultat.ProjetID = user.ProjetID;
+                resultat.ExamQuestions = "LOGOUT";
+                resultat.ExamReponseOptions = "LOGOUT";
+
+                iresultat.AjouterResultat(user.UserID, resultat);
+            }
+
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }

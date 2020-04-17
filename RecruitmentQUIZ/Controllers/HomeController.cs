@@ -34,6 +34,9 @@ namespace RecruitmentQUIZ.Controllers
 
 		public ActionResult Start()
 		{
+			var us = Session["user"] as User;
+
+
 			if (Session["Load"] == null)
 			{
 				if (Session["user"] == null)
@@ -45,15 +48,28 @@ namespace RecruitmentQUIZ.Controllers
 					Session["Load"] = "OK";
 					//shuffle
 					var rnd = new Random();
-
-					var us = Session["user"] as User;
-
+				
 					IEnumerable<Question> LstQuest = iquestion.GetAllQuestionsForProjetID(us.ProjetID.ToString()).OrderBy(item => rnd.Next()).OrderBy(item => rnd.Next()).Take(int.Parse(System.Configuration.ConfigurationManager.AppSettings["NbreQuestion"]));
 					return View(LstQuest);
 				}
 			}
 			else
 			{
+				var user = iuser.GetUser(us.Login, us.Password);
+
+				if (user.Resultat == null && Session["Load"] != null)
+				{
+					float TotalReponseChoix = 0;
+					Resultat resultat = new Resultat();
+					resultat.TotalPoint = 0;
+					resultat.TotalObtenu = TotalReponseChoix;
+					resultat.ProjetID = user.ProjetID;
+					resultat.ExamQuestions = "RELOAD";
+					resultat.ExamReponseOptions = "RELOAD";
+
+					iresultat.AjouterResultat(user.UserID, resultat);
+				}			
+
 				return RedirectToAction("EndSection","Home");
 			}
 					
@@ -110,17 +126,20 @@ namespace RecruitmentQUIZ.Controllers
 		private float CalculTotalReponse(string strOpt)
 		{
 			float TotalReponseOptionChoix = 0;
-			string[] tblQuestIDOptID = strOpt.Split('_');
-
-			for (int i = 0; i < tblQuestIDOptID.Length; i++)
+			if (!string.IsNullOrEmpty(strOpt))
 			{
-				if (!string.IsNullOrEmpty(tblQuestIDOptID[i]))
+				string[] tblQuestIDOptID = strOpt.Split('_');
+
+				for (int i = 0; i < tblQuestIDOptID.Length; i++)
 				{
-					string questid = tblQuestIDOptID[i].Split('#')[0];
-					string optid = tblQuestIDOptID[i].Split('#')[1];
-					if (ireponseQuest.VerifierSiReponseCorrect(questid, optid))
+					if (!string.IsNullOrEmpty(tblQuestIDOptID[i]))
 					{
-						TotalReponseOptionChoix = ireponseQuest.RetournerValeurReponseCorrecte(questid, optid);
+						string questid = tblQuestIDOptID[i].Split('#')[0];
+						string optid = tblQuestIDOptID[i].Split('#')[1];
+						if (ireponseQuest.VerifierSiReponseCorrect(questid, optid))
+						{
+							TotalReponseOptionChoix = ireponseQuest.RetournerValeurReponseCorrecte(questid, optid);
+						}
 					}
 				}
 			}
