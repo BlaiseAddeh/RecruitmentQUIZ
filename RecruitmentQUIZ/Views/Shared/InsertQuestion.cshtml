@@ -1,0 +1,32 @@
+﻿
+
+@model RecruitmentQUIZ.Models.Question
+
+@using (Html.BeginForm("Insert", "Question", FormMethod.Post))
+{
+	<table class="table table-condensed">
+		<tr style="visibility:hidden">
+			<td> Projet ID :</td>
+			<td>@Html.TextBoxFor(m => m.ProjetID, new {@Value =  Session["projetid"].ToString(), @readonly = "readonly" })  </td>
+		</tr>
+		
+		<tr>
+			<td> Libellé :</td>
+			<td>@Html.TextBoxFor(m => m.Libelle, htmlAttributes: new { @class = "form-control" })  </td>
+		</tr>
+		<tr>
+			<td> Type de réponse :</td>
+			<td>
+				@Html.DropDownListFor(model => model.EstMultiChoix, new List<SelectListItem> {
+				new SelectListItem{Text="Multiple Reponses", Value="True"},
+							  new SelectListItem{Text="Unique Reponse", Value="False"}}, "Mode de réponse", htmlAttributes: new { @class = "form-control" })
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" value="Save" formaction="/Question/insert" class="btn btn-success" />
+				<input type="submit" value="Cancel" formaction="/Question/index/@Session["projetid"].ToString()" class="btn btn-default" />
+			</td>
+		</tr>
+	</table>
+}

@@ -1,0 +1,179 @@
+﻿@model IEnumerable<RecruitmentQUIZ.Models.Question>
+@{
+	ViewBag.Title = "Start";
+}
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<style type="text/css">
+	.divTimer {
+		background-color: #419D78;
+		color: #EFD0CA;
+		font-size: 20px;
+		text-align: center;
+	}
+</style>
+
+<p>
+	<h2>Start - Exam </h2>
+	<div class="divTimer">
+		Time left = <span id="timer"></span>
+	</div>
+
+</p>
+
+<br />
+
+@{ 
+
+	var ExamTime = int.Parse(System.Configuration.ConfigurationManager.AppSettings["TempsCompo"]);
+
+}
+
+	@if (Model.Any())
+	{
+		foreach (var item in Model)
+		{
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<input class="inputIdClass" id="@item.QuestionID" type="hidden" name="name" value="@item.QuestionID" />
+					<span style="font-weight:bold">Question  </span> : @item.Libelle
+				</div>
+				<div class="panel-body">
+
+					@if (item.EstMultiChoix)
+					{
+						foreach (var itemOption in item.OptionReponses)
+						{
+							<input type="checkbox" class="checkboxBtnClass" id="@itemOption.OptionReponseID" value="@item.QuestionID#@itemOption.OptionReponseID" /> @itemOption.Libelle <br />
+						}
+					}
+					else
+					{
+						foreach (var itemOption in item.OptionReponses)
+						{
+							<input type="radio" id="@itemOption.OptionReponseID" class="radioBtnClass" value="@item.QuestionID#@itemOption.OptionReponseID" name="@item.QuestionID" /> @itemOption.Libelle <br />
+						}
+					}
+
+
+				</div>
+
+			</div>
+		}
+
+		<br />
+
+		<input id="btnSubmit" type="submit" name="submit" value="Valider" class="btn btn-primary" />
+
+	}
+
+	<script type="text/javascript">
+
+		document.getElementById('timer').innerHTML = @ExamTime + ":" + 20;
+		startTimer();
+
+		function startTimer() {
+			var presentTime = document.getElementById('timer').innerHTML;
+			var timeArray = presentTime.split(/[:]+/);
+			var m = timeArray[0];
+			var s = checkSecond((timeArray[1] - 1));
+			if (s == 59) { m = m - 1 }
+
+			if (m < 0) {
+				alert('timer completed');
+				$("#btnSubmit").trigger("click");
+			}
+
+			document.getElementById('timer').innerHTML = m + ":" + s;
+			console.log(m)
+			setTimeout(startTimer, 1000);
+		}
+
+		function checkSecond(sec) {
+			if (sec < 10 && sec >= 0) { sec = "0" + sec }; // add zero in front of numbers < 10
+			if (sec < 0) { sec = "59" };
+			return sec;
+		}
+
+		$(function () {
+
+			$("#btnSubmit").click(function () {
+
+				var str_questionsID = "";
+				var str_multichoiceSelectedOption = "";
+				var str_singlechoiceSelectedOption = "";
+
+				// Get All QuestionIDs
+				
+				var inputs = $(".inputIdClass");
+
+				for (var i = 0; i < inputs.length; i++){
+					str_questionsID += $(inputs[i]).val() +"£";
+				}
+
+				// Get response for multi choice questions
+
+				$('input:checkbox[class=checkboxBtnClass]:checked').each(function () {
+					str_multichoiceSelectedOption += $(this).val() + "_";
+				});
+
+				// Get response for single choice questions
+					
+				var v= $('input[type=radio].radioBtnClass:checked');
+				$(v).each(function (i) {
+					str_singlechoiceSelectedOption += $(this).val() + "_";					
+				});
+
+				/*
+				alert("Les ID Des questions de l'examen sont :" + str_questionsID + "\n" +
+					"Les Options selectionnées pour les questions à reponses multiple sont : " + str_multichoiceSelectedOption + "\n" +
+					"Les Options selectionnées pour les questions à reponses unique sont : " + str_singlechoiceSelectedOption);
+				*/
+
+				SaveResponse(str_questionsID, str_multichoiceSelectedOption, str_singlechoiceSelectedOption);
+
+			});
+
+
+			function SaveResponse(str_questionsID, str_multichoiceSelectedOption, str_singlechoiceSelectedOption) {
+			
+				var ExamResponses = {	
+			    LstQuestionID: str_questionsID,
+				LstMultiChoiceOptionId: str_multichoiceSelectedOption,
+				LstSingleChoiceOptionId: str_singlechoiceSelectedOption
+			}
+
+				$.ajax({
+					async: true,
+					type: 'GET',
+					dataType: 'JSON',
+					contentType: 'application/json; charset=utf-8',
+					data: ExamResponses,
+					url: '/Home/SaveExam',
+					success: function (data) {
+						if (data.success === true) {
+							alert(data.message);
+							window.location.href = "/Home/ShowResume?ResultatID=" + data.message;
+						} else {
+						    alert(data.message);
+							window.location.href = "/Login/DejaJouer";
+						}
+					},
+					error: function (data) {
+						alert(data);
+					}
+				});
+			};
+
+
+		})
+
+
+	</script>
+
+
+
+
+

@@ -1,0 +1,96 @@
+﻿@model RecruitmentQUIZ.ViewModels.ProjetsViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .SelectedCustomer {
+        background-color: gray;
+        font-weight: bold;
+    }
+</style>
+
+
+@{
+
+    if (Model.SelectedProjet != null)
+    {
+        if (Model.DisplayMode == "ReadOnly")
+        {
+            Html.RenderPartial("ShowProjet", Model.SelectedProjet);
+        }
+
+        if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("EditProjet", Model.SelectedProjet);
+        }
+
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("InsertProjet",
+            new RecruitmentQUIZ.Models.Projet());
+    }
+
+}
+
+<br />
+<br />
+
+@using (Html.BeginForm("Index", "Projet", FormMethod.Post))
+{
+
+    <input type="submit" name="name" value="Insert" formaction="/Projet/new" class="btn btn-primary" />
+    <br />
+    <br />
+    <table class="table table-condensed">
+        <tr>
+            <th>ProjetID</th>
+            <th>Libelle</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.Projets)
+        {
+            if (Model.SelectedProjet != null)
+            {
+                if (item.ProjectID == Model.SelectedProjet.ProjectID)
+                {
+                    @:<tr class="SelectedCustomer">
+                    }
+                    else
+                    {
+                        @: <tr>
+                        }
+                        }
+                        else
+                        {
+                        @: <tr>
+                        }
+
+                        <td>@item.ProjectID</td>
+                        <td>@item.Libelle</td>
+
+                        <td style="text-align:right">
+                            <input type="submit"
+                                   formaction="/Question/Index/@item.ProjectID"
+                                   value="Afficher" class="btn btn-default" />
+
+                            <input type="submit"
+                                   formaction="/Projet/select/@item.ProjectID"
+                                   value="Select" class="btn btn-success" />
+
+                            <input type="submit"
+                                   formaction="/Projet/delete/@item.ProjectID"
+                                   value="Delete" class="btn btn-danger" />
+                        </td>
+
+                        @: <tr>
+                        }
+                </table>
+            }
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+﻿@model RecruitmentQUIZ.Models.Question
+
+@using (Html.BeginForm("Edit", "Question", FormMethod.Post))
+{
+	<table class="table table-condensed">
+		<tr style="visibility:hidden">
+			<td> Projet ID : @Model.ProjetID</td>
+			<td> Question ID : @Model.QuestionID</td>
+		</tr>		
+		<tr>
+			<td> Libellé :</td>
+			<td>@Model.Libelle</td>
+		</tr>
+		<tr>
+			<td> Type réponse :</td>
+			@{
+				string typeR = string.Empty;
+
+				if (Model.EstMultiChoix == true)
+				{
+					typeR = "Multiples Réponses";
+				}
+				else
+				{
+					typeR = "Unique Réponse";
+				}
+			}
+
+			<td>@typeR</td>
+
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" value="Edit" formaction="/Question/edit/@Model.QuestionID" class="btn btn-success" />
+				<input type="submit" value="Cancel" formaction="/Question/index/@Model.Projet.ProjectID" class="btn btn-default" />
+			</td>
+		</tr>
+	</table>
+}

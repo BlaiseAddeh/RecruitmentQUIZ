@@ -1,0 +1,110 @@
+﻿@model RecruitmentQUIZ.ViewModels.ProjetDetailsViewModel
+@{
+    ViewBag.Title = "AfficherProjetDetails";
+}
+
+<style>
+    .SelectedCustomer {
+        background-color: gray;
+        font-weight: bold;
+    }
+</style>
+
+
+@{
+
+    if (Model.SelectedQuestion != null)
+    {
+        if (Model.DisplayMode == "ReadOnly")
+        {
+            Html.RenderPartial("ShowQuestion", Model.SelectedQuestion);
+        }
+
+        if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("EditQuestion", Model.SelectedQuestion);
+        }
+
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("InsertQuestion",
+            new RecruitmentQUIZ.Models.Question());
+    }
+
+}
+
+<br />
+<br />
+
+
+@using (Html.BeginForm("Index", "Question", FormMethod.Post))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+           <span style="font-weight:bold">Projet  </span> : @Model.LeProjet.Libelle
+        </div>
+        <div class="panel-body">
+            <div class="text-right">
+                <input type="submit" name="name" value="Insert" formaction="/Question/new/@Model.LeProjet.ProjectID" class="btn btn-primary" />
+            </div>
+            <br />
+            <table class="table table-condensed">
+                <tr>
+                    <th>Libelle</th>
+                    <th>Option</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.Questions)
+                {
+                    if (Model.SelectedQuestion != null)
+                    {
+                        if (item.QuestionID == Model.SelectedQuestion.QuestionID)
+                        {
+                            @:<tr class="SelectedCustomer">
+                        }
+						else
+						{
+                            @:<tr>
+						}
+					}
+					else
+					{
+                           @:<tr>
+					}
+                   
+                        <td>@item.Libelle</td>
+                        if (item.EstMultiChoix)
+                        {
+                            <td><span>Multiple Reponses</span></td>
+                        }
+                        else
+                        {
+                            <td><span>Unique Reponse</span></td>
+                        }
+
+                             <td style="text-align:right">
+                                 <input type="submit"
+                                        formaction="/OptionReponse/Index/@item.QuestionID"
+                                        value="Afficher" class="btn btn-default" />
+
+                                 <input type="submit"
+                                        formaction="/Question/select/@item.QuestionID"
+                                        value="Select" class="btn btn-success" />
+
+                                 <input type="submit"
+                                        formaction="/Question/delete/@item.QuestionID"
+                                        value="Desactiver" class="btn btn-danger" />
+                             </td>
+
+                    @:</tr>
+
+                }
+            </table>
+        </div>
+    </div>
+}
+
+
+

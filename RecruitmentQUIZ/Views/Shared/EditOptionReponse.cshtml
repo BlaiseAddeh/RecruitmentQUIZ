@@ -1,0 +1,23 @@
+﻿
+@model RecruitmentQUIZ.Models.OptionReponse
+
+@using (Html.BeginForm("Update", "OptionReponse", FormMethod.Post))
+{
+	<table class="table table-condensed">
+		<tr style="visibility:hidden">
+			<td> Option Reponse ID : @Html.TextBoxFor(m => m.OptionReponseID, new { @readonly = "readonly" })</td>
+			<td> Question ID : @Html.TextBoxFor(m => m.QuestionID, new { @readonly = "readonly" })</td>
+		</tr>		
+		<tr>
+			<td> Libellé :</td>
+			<td>@Html.TextBoxFor(m => m.Libelle, htmlAttributes: new { @class = "form-control" })  </td>
+		</tr>
+				
+		<tr>
+			<td colspan="2">
+				<input type="submit" value="Edit" formaction="/OptionReponse/update" class="btn btn-success" />
+				<input type="submit" value="Cancel" formaction="/OptionReponse/cancel/@Model.OptionReponseID" class="btn btn-default" />
+			</td>
+		</tr>
+	</table>
+}

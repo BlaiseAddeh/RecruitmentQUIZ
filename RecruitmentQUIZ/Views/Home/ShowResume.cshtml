@@ -1,0 +1,59 @@
+﻿@model  RecruitmentQUIZ.Models.Resultat
+@{
+    ViewBag.Title = "ShowResume";
+}
+
+<style>
+        .divcenter {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 70%;
+            height: 40%;
+            border-radius: 3px;
+            padding: 2%;
+        }
+
+        footer {
+            display: none;
+        }
+</style>
+
+<h2>Show Resume</h2>
+@{ 
+	var user = Session["user"] as RecruitmentQUIZ.Models.User;
+	string Libelprojet = user.Projet.Libelle;
+}
+
+<div class="divcenter">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <b> Projet :</b> @Libelprojet
+        </div>
+        <div class="panel-body">
+            <table class="table table-condensed">                
+                <tr>
+                    <td>Candidat(e) :</td>
+                    <td>@user.Name</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.TotalObtenu) </td>
+                    <td> @Model.TotalObtenu / <b> @Model.TotalPoint </b>  </td>
+                </tr>
+            </table>
+            <hr />
+            <table class="table table-striped">
+                <tr>
+                    <td>Resumé des réponses</td>
+                    <td>@Model.ExamReponseOptions</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,133 @@
+﻿@model RecruitmentQUIZ.ViewModels.QuestionDetailsViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .SelectedCustomer {
+        background-color: gray;
+        font-weight: bold;
+    }
+
+    .divLeft {
+        width: 70%;
+        display: block;
+        float: left;
+    }
+
+    .divRight {
+        width: 30%;
+        display: block;
+        float: right;
+    }
+</style>
+
+
+
+
+<h2>Option Reponse ::: Index</h2>
+
+@{
+
+    if (Model.SelectedOptionReponse != null)
+    {
+        if (Model.DisplayMode == "ReadOnly")
+        {
+            Html.RenderPartial("ShowOptionReponse", Model.SelectedOptionReponse);
+        }
+
+        if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("EditOptionReponse", Model.SelectedOptionReponse);
+        }
+
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("InsertOptionReponse",
+            new RecruitmentQUIZ.Models.OptionReponse());
+    }
+
+}
+
+<br />
+<br />
+
+@using (Html.BeginForm("Index", "OptionReponse", FormMethod.Post))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span style="font-weight:bold">Question  </span> : @Model.LaQuestion.Libelle
+        </div>
+        <div class="panel-body">
+            <div class="text-right">
+
+                <input type="submit" name="name" value="Options" formaction="/OptionReponse/new/@Model.LaQuestion.QuestionID" class="btn btn-primary" />
+
+                <input type="submit" name="name" value="Réponses" formaction="/OptionReponse/reponse/@Model.LaQuestion.QuestionID" class="btn btn-info" />
+
+            </div>
+            <br />
+            <table class="table table-condensed">
+                <tr>
+                    <th class="col-lg-8">Libelle</th>
+                    <th class="col-lg-4"></th>
+                </tr>
+
+                @foreach (var item in Model.OptionReponses)
+                {
+                    if (Model.SelectedOptionReponse != null)
+                    {
+                        if (item.OptionReponseID == Model.SelectedOptionReponse.OptionReponseID)
+                        {
+                            @:<tr class="SelectedCustomer">
+                            }
+                            else
+                            {
+                                @:<tr>
+                            }
+                        }
+                        else
+                        {
+                            @:<tr>
+                        }
+
+                        <td class="col-lg-8">
+                            <div class="divLeft">@item.Libelle</div>
+
+
+                            @if (Model.LaQuestion.Reponses.Count > 0)
+                            {
+                                if (Model.VerifierSiOptionEstReponseCorrecte(Model.LaQuestion, item))
+                                {
+                                    @:<div style="color:darkgreen; font-weight:bold" class="divRight"> Correcte </div>
+                                }
+                            }
+
+                        </td>
+
+
+
+                        <td style="text-align:right" class="col-lg-4">
+
+                            <input type="submit"
+                                   formaction="/OptionReponse/select/@item.OptionReponseID"
+                                   value="Select" class="btn btn-success" />
+
+                            <input type="submit"
+                                   formaction="/OptionReponse/delete/@item.OptionReponseID"
+                                   value="Desactiver" class="btn btn-danger" />
+                        </td>
+
+                    @:</tr>
+
+
+
+
+                }
+            </table>
+        </div>
+    </div>
+}
+
+

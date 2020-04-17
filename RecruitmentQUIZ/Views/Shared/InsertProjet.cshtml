@@ -1,0 +1,23 @@
+﻿
+
+@model RecruitmentQUIZ.Models.Projet
+
+@using (Html.BeginForm("Insert", "Projet", FormMethod.Post))
+{
+	<table class="table table-condensed">
+		<tr>
+			<td> Projet ID :</td>
+			<td>@Html.TextBoxFor(m => m.ProjectID, new { @readonly="readonly" })  </td>
+		</tr>
+		<tr>
+			<td> Libellé :</td>
+			<td>@Html.TextBoxFor(m => m.Libelle, htmlAttributes: new { @class ="form-control"})  </td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" value="Save" formaction="/Projet/insert" class="btn btn-success" />
+				<input type="submit" value="Cancel" formaction="/Projet/index" class="btn btn-default" />
+			</td>
+		</tr>
+	</table>
+}

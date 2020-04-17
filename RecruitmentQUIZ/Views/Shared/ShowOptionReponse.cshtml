@@ -1,0 +1,21 @@
+﻿@model RecruitmentQUIZ.Models.OptionReponse
+
+@using (Html.BeginForm("Edit", "OptionReponse", FormMethod.Post))
+{
+	<table class="table table-condensed">
+		<tr style="visibility:hidden">
+			<td colspan="2"> Question ID : @Model.QuestionID</td>
+		</tr>		
+		<tr>
+			<td> Libellé :</td>
+			<td>@Model.Libelle</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2">
+				<input type="submit" value="Edit" formaction="/OptionReponse/edit/@Model.OptionReponseID" class="btn btn-success" />
+				<input type="submit" value="Cancel" formaction="/OptionReponse/index/@Model.Question.QuestionID" class="btn btn-default" />
+			</td>
+		</tr>
+	</table>
+}

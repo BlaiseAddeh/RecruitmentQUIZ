@@ -1,0 +1,21 @@
+﻿@model RecruitmentQUIZ.Models.Projet
+
+@using (Html.BeginForm("Edit","Projet", FormMethod.Post))
+{
+	<table class="table table-condensed">
+		<tr>
+			<td> Projet ID :</td>
+			<td>@Model.ProjectID</td>
+		</tr>
+		<tr>
+			<td> Libellé :</td>
+			<td>@Model.Libelle</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" value="Edit" formaction="/Projet/edit/@Model.ProjectID" class="btn btn-success"/>
+				<input type="submit" value="Cancel" formaction="/Projet/index" class="btn btn-default"/>
+			</td>
+		</tr>
+	</table>
+}
