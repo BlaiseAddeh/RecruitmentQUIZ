@@ -1,6 +1,7 @@
 ﻿@model RecruitmentQUIZ.ViewModels.ProjetDetailsViewModel
 @{
     ViewBag.Title = "AfficherProjetDetails";
+    Layout = "~/Views/Shared/_Layoutadmin.cshtml";
 }
 
 <style>
@@ -42,14 +43,14 @@
 {
     <div class="panel panel-default">
         <div class="panel-heading">
-           <span style="font-weight:bold">Projet  </span> : @Model.LeProjet.Libelle
+            <span style="font-weight:bold">Projet  </span> : @Model.LeProjet.Libelle
         </div>
         <div class="panel-body">
             <div class="text-right">
                 <input type="submit" name="name" value="Insert" formaction="/Question/new/@Model.LeProjet.ProjectID" class="btn btn-primary" />
             </div>
             <br />
-            <table class="table table-condensed">
+            <table class="table table-hover">
                 <tr>
                     <th>Libelle</th>
                     <th>Option</th>
@@ -63,17 +64,17 @@
                         if (item.QuestionID == Model.SelectedQuestion.QuestionID)
                         {
                             @:<tr class="SelectedCustomer">
+                            }
+                            else
+                            {
+                                @:<tr>
+                            }
                         }
-						else
-						{
+                        else
+                        {
                             @:<tr>
-						}
-					}
-					else
-					{
-                           @:<tr>
-					}
-                   
+                        }
+
                         <td>@item.Libelle</td>
                         if (item.EstMultiChoix)
                         {
@@ -84,21 +85,19 @@
                             <td><span>Unique Reponse</span></td>
                         }
 
-                             <td style="text-align:right">
-                                 <input type="submit"
-                                        formaction="/OptionReponse/Index/@item.QuestionID"
-                                        value="Afficher" class="btn btn-default" />
+                              <td style="text-align:right">                                 
 
-                                 <input type="submit"
-                                        formaction="/Question/select/@item.QuestionID"
-                                        value="Select" class="btn btn-success" />
+                                  <button type="submit" formaction="/OptionReponse/Index/@item.QuestionID" class="btn btn-default"><i class="fa fa-search"></i></button>
 
-                                 <input type="submit"
-                                        formaction="/Question/delete/@item.QuestionID"
-                                        value="Desactiver" class="btn btn-danger" />
-                             </td>
+                                  <button type="submit" formaction="/Question/select/@item.QuestionID" class="btn btn-success"><i class="fa fa-hand-o-down"></i></button>
+
+                                  <button type="submit" formaction="/Question/delete/@item.QuestionID" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+
+
+                              </td>
 
                     @:</tr>
+
 
                 }
             </table>
@@ -106,5 +105,14 @@
     </div>
 }
 
+<script src="~/Content/assets/js/jquery-1.7.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+            debugger;
+            $("li,a").removeAttr('class');
+            $('#2').addClass('active-link');
+    });
+</script>
 
 

@@ -13,6 +13,9 @@ namespace RecruitmentQUIZ.Repositories
 		Projet GetProjet(int ProjetID);
 		void UpdateProjet(Projet projet);
 		void SupprimerProjet(Projet projet);
-		IEnumerable<Projet> GetAllProjets();		
+		IEnumerable<Projet> GetAllProjets();
+		int NbreCandidatByProjet(int ProjetID);
+		IEnumerable<User> GetCandidatsByProjet(int ProjetID);
+		IEnumerable<User> SearchCandidatsInProject(int ProjetID, string searchVal);
 	}
 }

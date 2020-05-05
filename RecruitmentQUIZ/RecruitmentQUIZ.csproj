@@ -164,6 +164,10 @@
     <Compile Include="Migrations\RecruitClassMigration\202004101452003_Update_NbrePointToFloat.designer.cs">
       <DependentUpon>202004101452003_Update_NbrePointToFloat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\RecruitClassMigration\202005051346591_Ajout_Information_User.cs" />
+    <Compile Include="Migrations\RecruitClassMigration\202005051346591_Ajout_Information_User.designer.cs">
+      <DependentUpon>202005051346591_Ajout_Information_User.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\RecruitClassMigration\Configuration.cs" />
     <Compile Include="Models\RecruitQuizDBEntities.cs" />
     <Compile Include="Repositories\IReponseQuest.cs" />
@@ -186,17 +190,30 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IResultat.cs" />
     <Compile Include="Repositories\IUser.cs" />
+    <Compile Include="Repositories\IUtilityFonctions.cs" />
     <Compile Include="Repositories\OptionReponseEntityFrameworkRepo.cs" />
     <Compile Include="Repositories\ProjetEntityFrameworkRepo.cs" />
     <Compile Include="Repositories\QuestionEntityFrameworkRepo.cs" />
     <Compile Include="Repositories\ReponseEntityFrameworkRepo.cs" />
     <Compile Include="Repositories\ResultatEntityFrameworkRepo.cs" />
     <Compile Include="Repositories\UserEntityFrameworkRepo.cs" />
+    <Compile Include="Repositories\UtilityFonctionsRepo.cs" />
+    <Compile Include="ViewModels\ProjetCandidat.cs" />
     <Compile Include="ViewModels\QuestionDetailsViewModel.cs" />
     <Compile Include="ViewModels\ProjetDetailsViewModel.cs" />
     <Compile Include="ViewModels\ProjetsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\css\bootstrap.css" />
+    <Content Include="Content\assets\css\custom.css" />
+    <Content Include="Content\assets\css\font-awesome.css" />
+    <Content Include="Content\assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\assets\img\mylogo.png" />
+    <Content Include="Content\assets\js\bootstrap.min.js" />
+    <Content Include="Content\assets\js\custom.js" />
+    <Content Include="Content\assets\js\jquery-1.10.2.js" />
+    <Content Include="Content\assets\js\jquery-1.7.1.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -211,6 +228,14 @@
     <Content Include="NOTE.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\assets\fonts\FontAwesome.otf" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regulard41d.eot" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -255,6 +280,12 @@
     <Content Include="Views\Home\EndSection.cshtml" />
     <Content Include="Views\Home\ShowResume.cshtml" />
     <Content Include="Views\Shared\_Layoutcnx.cshtml" />
+    <Content Include="Views\Shared\_Layoutadmin.cshtml" />
+    <Content Include="Views\Home\IndexAdmin.cshtml" />
+    <Content Include="Views\Home\Candidats.cshtml" />
+    <Content Include="Views\Home\Resultats.cshtml" />
+    <Content Include="Views\Shared\_ProjetCandidatDetails.cshtml" />
+    <Content Include="Views\Shared\_ProjetCandidatDetailsData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -296,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\RecruitClassMigration\202004101452003_Update_NbrePointToFloat.resx">
       <DependentUpon>202004101452003_Update_NbrePointToFloat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\RecruitClassMigration\202005051346591_Ajout_Information_User.resx">
+      <DependentUpon>202005051346591_Ajout_Information_User.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

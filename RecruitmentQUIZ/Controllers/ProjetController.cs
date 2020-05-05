@@ -15,6 +15,11 @@ namespace RecruitmentQUIZ.Controllers
         // GET: Projet
         public ActionResult Index()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             ProjetsViewModel model = new ProjetsViewModel();
             model.Projets = iprojet.GetAllProjets();
             model.SelectedProjet = null;

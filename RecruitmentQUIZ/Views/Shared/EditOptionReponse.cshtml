@@ -16,7 +16,7 @@
 		<tr>
 			<td colspan="2">
 				<input type="submit" value="Edit" formaction="/OptionReponse/update" class="btn btn-success" />
-				<input type="submit" value="Cancel" formaction="/OptionReponse/cancel/@Model.OptionReponseID" class="btn btn-default" />
+				<input type="submit" value="Cancel" formaction="/OptionReponse/index/@Session["questionid"].ToString()" class="btn btn-default" />
 			</td>
 		</tr>
 	</table>

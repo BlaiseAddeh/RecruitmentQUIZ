@@ -1,6 +1,7 @@
 ﻿@model RecruitmentQUIZ.ViewModels.ProjetsViewModel
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layoutadmin.cshtml";
 }
 
 <style>
@@ -45,7 +46,7 @@
     <br />
     <table class="table table-condensed">
         <tr>
-            <th>ProjetID</th>
+            <th style="display:none">ProjetID</th>
             <th>Libelle</th>
             <th></th>
         </tr>
@@ -59,38 +60,42 @@
                     }
                     else
                     {
-                        @: <tr>
-                        }
-                        }
-                        else
-                        {
-                        @: <tr>
-                        }
+                        @:<tr>
+                    }
+                }
+                else
+                {
+                    @:<tr>
+                }
 
-                        <td>@item.ProjectID</td>
-                        <td>@item.Libelle</td>
+                <td style="display:none">@item.ProjectID</td>
+                <td>@item.Libelle</td>
 
-                        <td style="text-align:right">
-                            <input type="submit"
-                                   formaction="/Question/Index/@item.ProjectID"
-                                   value="Afficher" class="btn btn-default" />
+                <td style="text-align:right">
 
-                            <input type="submit"
-                                   formaction="/Projet/select/@item.ProjectID"
-                                   value="Select" class="btn btn-success" />
+                    <button type="submit" formaction="/Question/Index/@item.ProjectID" class="btn btn-default"><i class="fa fa-search"></i></button>
 
-                            <input type="submit"
-                                   formaction="/Projet/delete/@item.ProjectID"
-                                   value="Delete" class="btn btn-danger" />
-                        </td>
+                    <button type="submit" formaction="/Projet/select/@item.ProjectID" class="btn btn-success"><i class="fa fa-hand-o-down"></i></button>
+                    
+                    <button type="submit" formaction="/Projet/delete/@item.ProjectID" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
 
-                        @: <tr>
-                        }
-                </table>
+                </td>
+
+                @:<tr>
             }
+</table>
+}
 
 
+<script src="~/Content/assets/js/jquery-1.7.1.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+            debugger;
+            $("li,a").removeAttr('class');
+            $('#2').addClass('active-link');
+    });
+</script>
 
 
 

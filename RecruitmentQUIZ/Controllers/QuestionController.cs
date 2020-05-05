@@ -16,6 +16,11 @@ namespace RecruitmentQUIZ.Controllers
         // GET: Question
         public ActionResult Index(string id)
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             Session["projetid"] = id;
             ProjetDetailsViewModel model = new ProjetDetailsViewModel();
             Projet myProjet = new Projet();

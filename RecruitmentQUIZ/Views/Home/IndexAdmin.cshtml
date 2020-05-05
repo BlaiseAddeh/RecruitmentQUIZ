@@ -1,0 +1,98 @@
+﻿@using RecruitmentQUIZ.Repositories
+
+@{
+    ViewBag.Title = "IndexAdmin";
+    Layout = "~/Views/Shared/_Layoutadmin.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2>ADMIN DASHBOARD</h2>
+    </div>
+</div>
+<!-- /. ROW  -->
+<hr />
+<div class="row">
+    <div class="col-lg-12 ">
+        <div class="alert alert-info">
+            @if (Session["user"] != null)
+            {
+             var user = Session["user"] as RecruitmentQUIZ.Models.User;
+
+                @:<strong>Bienvenue @user.Name ! </strong>Vous devez preparer les questions et options de réponse par projet.
+            }
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- /. ROW  -->
+<div class="row text-center pad-top">
+
+    @{
+        int NbreProjet = 0;
+        int NbreCandidats = 0;
+        int NbreAdmin = 1;
+        int CandSupMoy = 1;
+        IUtilityFonctions iutilFonction = new UtilityFonctionsRepo();
+        NbreProjet = iutilFonction.GetNbreProjet();
+        NbreCandidats = iutilFonction.getNbreCandidatEnBase();
+    }
+
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+        <div class="div-square">
+            <a href="@Url.Action("Index", "Projet")">
+                <i class="fa fa-clipboard fa-5x"></i>
+                <h4>Projets</h4><span class="badge badge-success">Nbre : @NbreProjet</span>
+            </a>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+        <div class="div-square">
+            <a href="@Url.Action("Candidats", "Home")">
+                <i class="fa fa-users fa-5x"></i>
+                <h4>Candidats</h4> <span class="badge badge-success">Nbre : @NbreCandidats</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+        <div class="div-square">
+            <a href="blank.html">
+                <i class="fa fa-comments-o fa-5x"></i>
+                <h4>Au dessus Moy</h4><span class="badge badge-success">Nbre : @CandSupMoy</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+        <div class="div-square">
+            <a href="blank.html">
+                <i class="fa fa-key fa-5x"></i>
+                <h4>Administrateur</h4><span class="badge badge-success">Nbre : @NbreAdmin</span>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Content/assets/js/jquery-1.7.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {      
+            debugger;
+            $("li,a").removeAttr('class');
+            $('#1').addClass('active-link');       
+    });
+</script>
+
+
+

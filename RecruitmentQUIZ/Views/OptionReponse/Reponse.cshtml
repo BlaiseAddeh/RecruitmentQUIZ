@@ -1,9 +1,10 @@
 ﻿@model RecruitmentQUIZ.Models.Question
 
 @{
-    ViewBag.Title = "Reponse";
+	ViewBag.Title = "Reponse";
+	Layout = "~/Views/Shared/_Layoutadmin.cshtml";
 }
-    <script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
 
 <script type="text/javascript">
 	$(function () {
@@ -68,36 +69,44 @@
 
 <h2>Reponse(s) possible(s)</h2>
 
-    <div class="panel panel-default">
-		<div class="panel-heading">
-			<input type="hidden" id="hidquestion" name="" value="@Model.QuestionID" />			
-			<span style="font-weight:bold">Question  </span> : @Model.Libelle
-		</div>
-        <div class="panel-body">
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<input type="hidden" id="hidquestion" name="" value="@Model.QuestionID" />
+		<span style="font-weight:bold">Question  </span> : @Model.Libelle
+	</div>
+	<div class="panel-body">
 
-            <input type="hidden" id="hidoption" name="" value="@Model.EstMultiChoix.ToString()" />
+		<input type="hidden" id="hidoption" name="" value="@Model.EstMultiChoix.ToString()" />
 
-            @if (Model.EstMultiChoix)
-            {
-                foreach (var item in Model.OptionReponses)
-                {
-                    <input type="checkbox" class="checkboxBtnClass" id="@item.OptionReponseID" value="@item.OptionReponseID" /> @item.Libelle <br />
-                }
-            }
-            else
-            {
-                foreach (var item in Model.OptionReponses)
-                {
-                    <input type="radio" id="@item.OptionReponseID" class="radioBtnClass" value="@item.OptionReponseID" name="group1" /> @item.Libelle <br />
-                }
-            }
-            <br />
+		@if (Model.EstMultiChoix)
+		{
+			foreach (var item in Model.OptionReponses)
+			{
+				<input type="checkbox" class="checkboxBtnClass" id="@item.OptionReponseID" value="@item.OptionReponseID" /> @item.Libelle <br />
+			}
+		}
+		else
+		{
+			foreach (var item in Model.OptionReponses)
+			{
+				<input type="radio" id="@item.OptionReponseID" class="radioBtnClass" value="@item.OptionReponseID" name="group1" /> @item.Libelle <br />
+			}
+		}
+		<br />
 
-            <input id="btnSubmit" type="submit" name="submit" value="Valider" class="btn btn-primary" />
-            <input id="btnCancel" type="submit" name="submit" value="Annuler" formaction="/OptionReponse/index/@Model.QuestionID" class="btn btn-default" />
+		<input id="btnSubmit" type="submit" name="submit" value="Valider" class="btn btn-primary" />
+		<input id="btnCancel" type="submit" name="submit" value="Annuler" formaction="/OptionReponse/index/@Model.QuestionID" class="btn btn-default" />
 
-        </div>
+	</div>
 
-    </div>
+</div>
 
+<script src="~/Content/assets/js/jquery-1.7.1.min.js"></script>
 
+<script>
+	$(document).ready(function () {
+		debugger;
+		$("li,a").removeAttr('class');
+		$('#2').addClass('active-link');
+	});
+</script>

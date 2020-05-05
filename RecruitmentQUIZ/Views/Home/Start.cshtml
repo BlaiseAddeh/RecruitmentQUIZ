@@ -12,6 +12,9 @@
 		font-size: 20px;
 		text-align: center;
 	}
+	footer {
+	display:none;
+	}
 </style>
 
 <p>
@@ -19,7 +22,6 @@
 	<div class="divTimer">
 		Time left = <span id="timer"></span>
 	</div>
-
 </p>
 
 <br />
@@ -57,7 +59,6 @@
 						}
 					}
 
-
 				</div>
 
 			</div>
@@ -65,7 +66,7 @@
 
 		<br />
 
-		<input id="btnSubmit" type="submit" name="submit" value="Valider" class="btn btn-primary" />
+		<input id="btnSubmit" style="margin-bottom:25px" type="submit" name="submit" value="Valider" class="btn btn-primary" />
 
 	}
 
@@ -154,10 +155,10 @@
 					url: '/Home/SaveExam',
 					success: function (data) {
 						if (data.success === true) {
-							alert(data.message);
+							//alert(data.message);
 							window.location.href = "/Home/ShowResume?ResultatID=" + data.message;
 						} else {
-						    alert(data.message);
+						    //alert(data.message);
 							window.location.href = "/Login/DejaJouer";
 						}
 					},
@@ -169,8 +170,7 @@
 
 
 		})
-
-
+		
 	</script>
 
 

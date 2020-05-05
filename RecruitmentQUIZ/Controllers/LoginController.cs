@@ -31,7 +31,11 @@ namespace RecruitmentQUIZ.Controllers
                     {
                         return RedirectToAction("DejaJouer", "Login");
                     }
-                    Session["user"] = myUser;                   
+                    Session["user"] = myUser;
+                    if (myUser.SecurityLevel.Libelle.Equals("Admin", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return RedirectToAction("IndexAdmin", "Home");
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 else

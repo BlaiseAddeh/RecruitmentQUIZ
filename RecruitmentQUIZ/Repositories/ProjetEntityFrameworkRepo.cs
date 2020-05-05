@@ -24,9 +24,24 @@ namespace RecruitmentQUIZ.Repositories
 			return _db.Projets.ToList();
 		}
 
+		public IEnumerable<User> GetCandidatsByProjet(int ProjetID)
+		{
+			return _db.Users.Where(x => x.ProjetID == ProjetID);
+		}
+
 		public Projet GetProjet(int ProjetID)
 		{
 			return _db.Projets.FirstOrDefault(x => x.ProjectID == ProjetID);
+		}
+
+		public int NbreCandidatByProjet(int ProjetID)
+		{
+			return _db.Users.Where(x => x.ProjetID == ProjetID).Count();
+		}
+
+		public IEnumerable<User> SearchCandidatsInProject(int ProjetID, string searchVal)
+		{
+			return _db.Users.Where(x => x.ProjetID == ProjetID && (x.Name.Contains(searchVal) || x.Phone.Contains(searchVal) || x.NiveauEtude.Contains(searchVal))).ToList();
 		}
 
 		public void SupprimerProjet(Projet projet)

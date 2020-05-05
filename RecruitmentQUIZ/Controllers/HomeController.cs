@@ -1,5 +1,6 @@
 ﻿using RecruitmentQUIZ.Models;
 using RecruitmentQUIZ.Repositories;
+using RecruitmentQUIZ.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace RecruitmentQUIZ.Controllers
 		IReponseQuest ireponseQuest = new ReponseEntityFrameworkRepo();
 		IResultat iresultat = new ResultatEntityFrameworkRepo();
 		IUser iuser = new UserEntityFrameworkRepo();
+		IProjet iprojet = new ProjetEntityFrameworkRepo();
+
 
 		public ActionResult Index()
 		{
@@ -31,11 +34,21 @@ namespace RecruitmentQUIZ.Controllers
 			}
 			return View();
 		}
+		
+		
+		public ActionResult IndexAdmin()
+		{
+			if (Session["user"] == null)
+			{
+				return RedirectToAction("Login", "Login");
+			}
+			
+			return View();
+		}
 
 		public ActionResult Start()
 		{
 			var us = Session["user"] as User;
-
 
 			if (Session["Load"] == null)
 			{
@@ -46,9 +59,10 @@ namespace RecruitmentQUIZ.Controllers
 				else
 				{
 					Session["Load"] = "OK";
+
 					//shuffle
 					var rnd = new Random();
-				
+
 					IEnumerable<Question> LstQuest = iquestion.GetAllQuestionsForProjetID(us.ProjetID.ToString()).OrderBy(item => rnd.Next()).OrderBy(item => rnd.Next()).Take(int.Parse(System.Configuration.ConfigurationManager.AppSettings["NbreQuestion"]));
 					return View(LstQuest);
 				}
@@ -169,14 +183,71 @@ namespace RecruitmentQUIZ.Controllers
 			return View(result);
 		}
 
-		/*
-		public ActionResult Contact()
+		
+		public ActionResult Candidats()
 		{
-			ViewBag.Message = "Your contact page.";
+			if (Session["user"] == null)
+			{
+				return RedirectToAction("Login", "Login");
+			}
+			List<ProjetCandidat> LstProjetCandidats= new List<ProjetCandidat>();
+			IEnumerable<Projet> LstProjets = iprojet.GetAllProjets();
+			foreach(Projet proj in LstProjets)
+			{
+				ProjetCandidat projetCandidat = new ProjetCandidat();
+				projetCandidat.LeProjet = proj;
+				projetCandidat.Candidats = iprojet.GetCandidatsByProjet(proj.ProjectID);
+				LstProjetCandidats.Add(projetCandidat);
+			}
+
+			return View(LstProjetCandidats);
+		}
+
+		public ActionResult ProjetCandidatDetails(int Id)
+		{
+			if (Session["user"] == null)
+			{
+				return RedirectToAction("Login", "Login");
+			}
+			TempData["projetID"] = Id;
+			TempData.Keep("projetID");
+			IEnumerable<User> LstUser = iprojet.GetCandidatsByProjet(Id);
+			return PartialView("_ProjetCandidatDetails", LstUser);
+		}
+
+		[HttpPost]
+		public ActionResult ProjetCandidatDetailsSearch(string searchvalue)
+		{
+			if (Session["user"] == null)
+			{
+				return RedirectToAction("Login", "Login");
+			}
+			var projetID = TempData["projetID"];
+			TempData.Keep("projetID");
+			IEnumerable<User> LstUser =null;
+			if (!string.IsNullOrEmpty(searchvalue))
+			{
+				LstUser = iprojet.SearchCandidatsInProject(int.Parse(projetID.ToString()), searchvalue);
+			}
+			else
+			{
+				LstUser = iprojet.GetCandidatsByProjet(int.Parse(projetID.ToString()));
+			}
+			
+			return PartialView("_ProjetCandidatDetailsData", LstUser);
+		}
+
+
+		public ActionResult Resultats()
+		{
+			if (Session["user"] == null)
+			{
+				return RedirectToAction("Login", "Login");
+			}
 
 			return View();
 		}
-	  */
+
 
 		public class ExamResponses
 		{
@@ -184,7 +255,6 @@ namespace RecruitmentQUIZ.Controllers
 			public string LstMultiChoiceOptionId { get; set; }
 			public string LstSingleChoiceOptionId { get; set; }
 		}
-
 
 	}
 }

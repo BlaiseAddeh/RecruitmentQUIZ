@@ -12,6 +12,15 @@ namespace RecruitmentQUIZ.Models
 		public string Login { get; set; }
 		public string Name { get; set; }
 		public string Password { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Sexe { get; set; }
+		public string NiveauEtude { get; set; }
+		public string LangueMaternelle { get; set; }
+		public string LangueTravail1 { get; set; }
+		public string LangueTravail2 { get; set; }
+		public string Nationalite { get; set; }
+		public string Photo { get; set; }
 
 		public Nullable<int> SecurityLevelID { get; set; }
 		public virtual SecurityLevel SecurityLevel { get; set; }

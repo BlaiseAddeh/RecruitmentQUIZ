@@ -18,6 +18,11 @@ namespace RecruitmentQUIZ.Controllers
         // GET: OptionReponse
         public ActionResult Index(string id)
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             Session["questionid"] = id;
             QuestionDetailsViewModel model = new QuestionDetailsViewModel();
             Question myQuestion = new Question();

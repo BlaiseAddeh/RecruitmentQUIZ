@@ -1,0 +1,105 @@
+﻿@model IEnumerable<RecruitmentQUIZ.ViewModels.ProjetCandidat>
+
+@{
+	ViewBag.Title = "Candidats";
+	Layout = "~/Views/Shared/_Layoutadmin.cshtml";
+}
+
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+<style type="text/css">
+	td > a {
+		padding: 3px;
+		border: 1px solid #e7e1e1;
+		border-radius: 6px;
+		cursor: pointer;
+	}
+
+	td > a:hover {
+		padding: 5px;
+		border: 1px solid #cec5c5;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+</style>
+<h2>Candidats par projet</h2>
+
+<div id='myModal' class='modal'>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div id='myModalContent'></div>
+		</div>
+	</div>
+
+</div>
+
+<table class="table table-hover">
+	<tr>
+		<th style="display:none">ProjetID</th>
+		<th>Libelle</th>
+		<th>Nbre Candidats</th>
+		<th></th>
+	</tr>
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td style="display: none">@item.LeProjet.ProjectID</td>
+			<td>@item.LeProjet.Libelle</td>
+			<td>@item.Candidats.Count()</td>
+
+			<td style="text-align:right">
+				@*<button type="submit" formaction="/Question/Index/@item.LeProjet.ProjectID" class="btn btn-default"><i class="fa fa-search"></i></button>*@
+				<a href="javascript:void(0);" class="anchorDetail" data-id="@item.LeProjet.ProjectID"><i class="fa fa-search"></i></a>
+			</td>
+		</tr>
+	}
+
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+	var TeamDetailPostBackURL = '/Home/ProjetCandidatDetails';
+	$(function () {
+		$(".anchorDetail").click(function () {
+			debugger;
+			var $buttonClicked = $(this);
+			var id = $buttonClicked.attr('data-id');
+			var options = { "backdrop": "static", keyboard: true };
+			$.ajax({
+				type: "GET",
+				url: TeamDetailPostBackURL,
+				contentType: "application/json; charset=utf-8",
+				data: { "Id": id },
+				datatype: "json",
+				success: function (data) {
+					debugger;
+					$('#myModalContent').html(data);
+					$('#myModal').modal(options);
+					$('#myModal').modal('show');
+
+				},
+				error: function () {
+					alert("Dynamic content load failed.");
+				}
+			});
+		});
+		//$("#closebtn").on('click',function(){
+		//    $('#myModal').modal('hide');
+
+		$("#closbtn").click(function () {
+			$('#myModal').modal('hide');
+		});
+	});
+
+</script>
+
+
+<script>
+	$(document).ready(function () {
+		debugger;
+		$("li,a").removeAttr('class');
+		$('#3').addClass('active-link');
+	});
+</script>

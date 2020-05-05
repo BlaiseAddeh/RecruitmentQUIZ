@@ -1,0 +1,29 @@
+﻿@model IEnumerable<RecruitmentQUIZ.Models.User>
+
+		@{
+			int Num = 0;
+		}		
+
+		@foreach (var item in Model)
+		{
+			@:<dl class="dl-horizontal">
+				<dt style="margin-right:10px">
+					@{
+						Num = Num + 1;
+					}
+					N° @Num
+				</dt>
+
+				<dd>
+					<span style="font-weight:bold; color:red">@item.Name</span> <br />
+					<span style="font-weight:bold">Phone :</span> @item.Phone <br />
+					<span style="font-weight:bold">Email :</span> @item.Email <br />
+					<span style="font-weight:bold">Sexe :</span> @item.Sexe <br />
+					<span style="font-weight:bold">Nationalité :</span> @item.Nationalite <br />
+					<span style="font-weight:bold; color:mediumblue">Niveau Etude :</span> @item.NiveauEtude
+				</dd>
+
+			@:</dl>
+			<hr />
+		}
+
