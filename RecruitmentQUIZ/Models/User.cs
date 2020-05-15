@@ -21,7 +21,11 @@ namespace RecruitmentQUIZ.Models
 		public string LangueTravail2 { get; set; }
 		public string Nationalite { get; set; }
 		public string Photo { get; set; }
-
+		public bool EstConvoquePourPratique { get; set; }
+		public bool EstRetenuApresPratique { get; set; }
+		public bool EstActif { get; set; }
+		public bool ADemarrerExame { get; set; }
+		public DateTime DateDemarrageExam { get; set; }
 		public Nullable<int> SecurityLevelID { get; set; }
 		public virtual SecurityLevel SecurityLevel { get; set; }
 

@@ -1,49 +1,50 @@
 ﻿@model IEnumerable<RecruitmentQUIZ.Models.User>
 
 <div>
+   
 
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h4 class="modal-title" id="myModalLabel">Candidat(s) du projet</h4>
-	</div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">Candidat(s) du projet</h4>
+    </div>
 
-	<div id="SearchCricketer" style="float:right;padding-right:1rem; padding-top:1rem">
-		<input type="text" class="form-control" id="TxtSearchCricketer" placeholder="Search" />
-	</div>
-	<div class="clearfix"></div>
+    <div id="SearchCricketer" style="float:right;padding-right:1rem; padding-top:1rem">
+        <input type="text" class="form-control" id="TxtSearchCricketer" placeholder="Search" />
+    </div>
+    <div class="clearfix"></div>
 
-	<hr />
+    <hr />
 
-	<div id="DivCandidatConteneur">
-		@Html.Partial("~/Views/Shared/_ProjetCandidatDetailsData.cshtml", Model)
-	</div>
+    <div id="DivCandidatConteneur">
+        @Html.Partial("~/Views/Shared/_ProjetCandidatDetailsData.cshtml", Model)
+    </div>
 
 </div>
 
 <script type="text/javascript">
     var timer;
-	$("#TxtSearchCricketer").on('keyup', function (event) {
-		debugger;
+    $("#TxtSearchCricketer").on('keyup', function (event) {
+        debugger;
         clearTimeout(timer);  //clear any running timeout on key up
         timer = setTimeout(function () { //then give it a second to see if the user is finished
-          $.ajax({
-                    type: "POST",
-                    url: "/Home/ProjetCandidatDetailsSearch",
-                    data: '{searchvalue: "' + $("#TxtSearchCricketer").val() + '" }',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "html",
-			        success: function (response) {
-						$('#DivCandidatConteneur').empty();
-                        $('#DivCandidatConteneur').html(response);                      
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    }
-                });
+            $.ajax({
+                type: "POST",
+                url: "/Home/ProjetCandidatDetailsSearch",
+                data: '{searchvalue: "' + $("#TxtSearchCricketer").val() + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (response) {
+                    $('#DivCandidatConteneur').empty();
+                    $('#DivCandidatConteneur').html(response);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
         }, 1000);
-	});
+    });
 
 </script>

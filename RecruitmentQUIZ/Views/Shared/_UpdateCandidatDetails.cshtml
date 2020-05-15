@@ -1,0 +1,121 @@
+﻿@model RecruitmentQUIZ.Models.User
+
+<div class="modal-header">
+    <button id="btnCloseCandUpdate" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title" id="myModalLabel">Modification Candidat</h4>
+</div>
+
+<form>
+    <input type="hidden" name="name" id="userid" value="@Model.UserID" />
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputname">Name</label>
+            <input type="text" class="form-control" id="inputname" value="@Model.Name">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputgender">Gender</label>
+            <select id="inputgender" class="form-control">
+                <option value="Male">Homme</option>
+                <option value="Female">Femme</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputemail">Email</label>
+            <input type="email" class="form-control" id="inputemail" value="@Model.Email">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputphone">Phone</label>
+            <input type="text" class="form-control" id="inputphone" value="@Model.Phone">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputlangmat">Langue Maternelle:</label>
+            <input type="text" class="form-control" id="inputlangmat" value="@Model.LangueMaternelle">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputLangWork1">Langue de travail 1:</label>
+            <input type="text" class="form-control" id="inputLangWork1" value="@Model.LangueTravail1">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputLangWork2">Langue de travail 2:</label>
+            <input type="text" class="form-control" id="inputLangWork2" value="@Model.LangueTravail2">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputNivEtude">NiveauEtude:</label>
+            <input type="text" class="form-control" id="inputNivEtude" value="@Model.NiveauEtude">
+        </div>
+    </div>
+    <button id="btnUpdateCandidat" style="margin:1rem" type="submit" class="btn btn-primary">Valider</button>
+</form>  
+
+<script>
+	var TeamDetailPostBackURL = '/Home/EditCandidatInfos';
+	$(function () {
+		$("#btnUpdateCandidat").click(function () {
+
+			var Userid = $("#userid").val();
+			var Username = $("#inputname").val(); 
+			var Usergender = $("#inputgender").val();
+            var Useremail = $("#inputemail").val(); 
+			var Userphone = $("#inputphone").val(); 
+			var Userlangmat = $("#inputlangmat").val();  
+			var UserlangWork1 = $("#inputLangWork1").val();  
+			var UserlangWork2 = $("#inputLangWork2").val();  
+			var Userniveauetude = $("#inputNivEtude").val();            
+
+            
+			
+            var options = { "backdrop": "static", keyboard: true };
+			$.ajax({
+				type: "GET",
+				url: TeamDetailPostBackURL,
+                 async: false,
+                 cache: false,
+                timeout: 30000,
+				contentType: "application/json; charset=utf-8",
+				data: {
+					"Userid": Userid,
+					"Username": Username,
+					"Usergender": Usergender,
+					"Useremail": Useremail,
+					"Userphone": Userphone,
+					"Userlangmat": Userlangmat,
+					"UserlangWork1": UserlangWork1,
+					"UserlangWork2": UserlangWork2,
+                    "Userniveauetude": Userniveauetude
+				},
+				datatype: "json",
+				success: function (data) {
+					debugger;
+					if (data.msg == true) {
+						alert('Mise à jour réussie !');                         
+					} else {
+						alert('Echec de la mise à jour !');
+					}
+
+				},
+				error: function () {
+					alert("Dynamic content load failed.");
+				}
+			});
+
+           
+
+		});		
+
+		$("#btnCloseCandUpdate").click(function () {
+			debugger;
+			$('#myModalEditCandidat').modal('hide');
+			$('#myModal').modal('hide');
+             location.reload();
+		});
+	});
+
+</script>
+
+

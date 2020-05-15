@@ -1,0 +1,65 @@
+﻿
+<style type="text/css">
+	.upload-btn-wrapper {
+		position: relative;
+		overflow: hidden;
+		display: inline-block;
+	}
+
+	.btnUpload {
+		border: 2px solid gray;
+		color: gray;
+		background-color: white;
+		padding: 8px 20px;
+		border-radius: 8px;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	.upload-btn-wrapper input[type=file] {
+		font-size: 100px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		opacity: 0;
+	}
+</style>
+
+
+@using (Html.BeginForm("ImportExcel", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+	<div class="modal-content">
+		<div class="modal-header">
+			<button id="btnImport" type="button" class="close" data-dismiss="modal">
+				×
+			</button>
+			<h4 class="modal-title">Candidat(s) du projet</h4>
+		</div>
+		<div class="modal-body" style="margin-bottom: 4rem">
+			<form>
+				<div class="form-group text-right">
+					<a  href="@Url.Action("Download", "Home")">Télécharger un modèle</a>
+				</div>
+				<hr />
+				<div class="form-group">
+					<div class="col-md-4">
+						<label for="inputname">Fichier à charger</label>
+					</div>
+					<div class="col-md-8">
+
+						<div class="upload-btn-wrapper">
+							<button class="btnUpload">Upload a file</button>
+							<input type="file" id="FileUpload1" name="FileUpload1" />
+						</div>
+
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<input type="submit" id="Submit" name="Submit" value="Valider" class="btn btn-primary" />
+		</div>
+	</div>
+
+}

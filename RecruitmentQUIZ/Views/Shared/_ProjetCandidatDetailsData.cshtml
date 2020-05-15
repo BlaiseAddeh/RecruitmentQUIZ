@@ -2,6 +2,7 @@
 
 		@{
 			int Num = 0;
+			string EtatConvocationPratique ="NON";
 		}		
 
 		@foreach (var item in Model)
@@ -10,20 +11,135 @@
 				<dt style="margin-right:10px">
 					@{
 						Num = Num + 1;
+						EtatConvocationPratique = item.EstConvoquePourPratique ? "OUI" : "NON";
 					}
 					N° @Num
 				</dt>
 
 				<dd>
-					<span style="font-weight:bold; color:red">@item.Name</span> <br />
+					<span style="font-weight:bold; color:red">@item.Name</span> &nbsp;&nbsp; <span style="font-weight:bold; color:darkgreen">Est Convoqué :</span> @EtatConvocationPratique<br />
 					<span style="font-weight:bold">Phone :</span> @item.Phone <br />
 					<span style="font-weight:bold">Email :</span> @item.Email <br />
 					<span style="font-weight:bold">Sexe :</span> @item.Sexe <br />
 					<span style="font-weight:bold">Nationalité :</span> @item.Nationalite <br />
-					<span style="font-weight:bold; color:mediumblue">Niveau Etude :</span> @item.NiveauEtude
+					<span style="font-weight:bold; color:mediumblue">Niveau Etude :</span> @item.NiveauEtude <br />
+					<div class="col-md-12">
+						<div class="row">
+							@{ if (item.EstConvoquePourPratique == false)
+								{
+									<div class="col-md-6" style="padding-top:8px; padding-left:8px">
+										<button class="btn btn-toolbar btn-sm" id="btnConvoq+@item.UserID" data-id="@item.UserID">Convocation Pratique</button>
+									</div>
+								}}
+
+							<div class="col-md-6" style="padding-top:8px; padding-left:2px">
+								<button class="btn btn-primary btn-sm" id="btnEdit+@item.UserID" data-id="@item.UserID">Edit</button> &nbsp;&nbsp;
+								<button class="btn btn-danger btn-sm" id="btnDelete+@item.UserID" data-id="@item.UserID">Delete</button>
+							</div>
+						</div>
+					</div>
 				</dd>
 
 			@:</dl>
 			<hr />
 		}
 
+<script type="text/javascript">  
+	$(function () {
+		 $( "[id^='btnDelete']" ).click(function () {
+			
+                var r = confirm("Do you want to delete candidat with ID = " + $(this).attr("data-id"));
+				if (r == true) {
+
+						 $.ajax({
+							type: "POST",
+							url: "/Home/DesactiverCandidat",
+							data: '{userid: "' + $(this).attr("data-id") + '" }',
+							contentType: "application/json; charset=utf-8",
+							dataType: "html",
+							success: function (response) {
+								$('#DivCandidatConteneur').empty();
+								$('#DivCandidatConteneur').html(response);                      
+							},
+							failure: function (response) {
+								alert(response.responseText);
+							},
+							error: function (response) {
+								alert(response.responseText);
+							}
+						});
+
+
+				} else {
+				 
+				}
+
+		}
+		);
+
+
+		 $( "[id^='btnConvoq']" ).click(function () {
+			
+                var r = confirm("Are you sure to convoque this candidat ?");
+				if (r == true) {
+
+						 $.ajax({
+							type: "POST",
+							url: "/Home/ConvoqueCandidatPourPratique",
+							data: '{userid: "' + $(this).attr("data-id") + '" }',
+							contentType: "application/json; charset=utf-8",
+							dataType: "html",
+							success: function (response) {
+								$('#DivCandidatConteneur').empty();
+								$('#DivCandidatConteneur').html(response);                      
+							},
+							failure: function (response) {
+								alert(response.responseText);
+							},
+							error: function (response) {
+								alert(response.responseText);
+							}
+						});
+
+
+				} else {
+				 
+				}
+
+		}
+		);
+
+
+
+		var TeamDetailPostBackURL = '/Home/UpdateCandidatInfos';
+
+		 $( "[id^='btnEdit']" ).click(function () {		
+			
+			   var $buttonClicked = $(this);
+				var id = $buttonClicked.attr('data-id');
+				var options = { "backdrop": "static", keyboard: true };
+				$.ajax({
+					type: "GET",
+					url: TeamDetailPostBackURL,
+					contentType: "application/json; charset=utf-8",
+					data: { "Id": id },
+					datatype: "json",
+					success: function (data) {
+						debugger;
+						$('#myModalContentEditCandidat').html(data);
+						$('#myModalEditCandidat').modal(options);
+						$('#myModalEditCandidat').modal('show');
+						$('#myModal').modal('hide');
+
+					},
+					error: function () {
+						
+						alert("Dynamic content load failed.");
+					}
+				});
+
+		}
+		);
+	})
+
+</script>

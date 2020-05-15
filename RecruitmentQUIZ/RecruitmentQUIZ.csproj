@@ -168,6 +168,14 @@
     <Compile Include="Migrations\RecruitClassMigration\202005051346591_Ajout_Information_User.designer.cs">
       <DependentUpon>202005051346591_Ajout_Information_User.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\RecruitClassMigration\202005060947384_MAJ_EstActif_Convocation.cs" />
+    <Compile Include="Migrations\RecruitClassMigration\202005060947384_MAJ_EstActif_Convocation.designer.cs">
+      <DependentUpon>202005060947384_MAJ_EstActif_Convocation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\RecruitClassMigration\202005081601102_UpdateUserWithDateDemarrageExam.cs" />
+    <Compile Include="Migrations\RecruitClassMigration\202005081601102_UpdateUserWithDateDemarrageExam.designer.cs">
+      <DependentUpon>202005081601102_UpdateUserWithDateDemarrageExam.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\RecruitClassMigration\Configuration.cs" />
     <Compile Include="Models\RecruitQuizDBEntities.cs" />
     <Compile Include="Repositories\IReponseQuest.cs" />
@@ -286,9 +294,13 @@
     <Content Include="Views\Home\Resultats.cshtml" />
     <Content Include="Views\Shared\_ProjetCandidatDetails.cshtml" />
     <Content Include="Views\Shared\_ProjetCandidatDetailsData.cshtml" />
+    <Content Include="Views\Shared\_UpdateCandidatDetails.cshtml" />
+    <Content Include="Views\Shared\_LoadCandidatExcelImportFile.cshtml" />
+    <Content Include="Views\Home\NonRespectInstrction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\downloadModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -330,6 +342,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\RecruitClassMigration\202005051346591_Ajout_Information_User.resx">
       <DependentUpon>202005051346591_Ajout_Information_User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\RecruitClassMigration\202005060947384_MAJ_EstActif_Convocation.resx">
+      <DependentUpon>202005060947384_MAJ_EstActif_Convocation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\RecruitClassMigration\202005081601102_UpdateUserWithDateDemarrageExam.resx">
+      <DependentUpon>202005081601102_UpdateUserWithDateDemarrageExam.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

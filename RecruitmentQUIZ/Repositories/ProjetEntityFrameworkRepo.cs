@@ -26,7 +26,7 @@ namespace RecruitmentQUIZ.Repositories
 
 		public IEnumerable<User> GetCandidatsByProjet(int ProjetID)
 		{
-			return _db.Users.Where(x => x.ProjetID == ProjetID);
+			return _db.Users.Where(x => x.ProjetID == ProjetID && x.EstActif==true);
 		}
 
 		public Projet GetProjet(int ProjetID)
@@ -36,12 +36,12 @@ namespace RecruitmentQUIZ.Repositories
 
 		public int NbreCandidatByProjet(int ProjetID)
 		{
-			return _db.Users.Where(x => x.ProjetID == ProjetID).Count();
+			return _db.Users.Where(x => x.ProjetID == ProjetID && x.EstActif == true).Count();
 		}
 
 		public IEnumerable<User> SearchCandidatsInProject(int ProjetID, string searchVal)
 		{
-			return _db.Users.Where(x => x.ProjetID == ProjetID && (x.Name.Contains(searchVal) || x.Phone.Contains(searchVal) || x.NiveauEtude.Contains(searchVal))).ToList();
+			return _db.Users.Where(x => x.ProjetID == ProjetID && (x.Name.Contains(searchVal) || x.Phone.Contains(searchVal) || x.NiveauEtude.Contains(searchVal)) && x.EstActif == true).ToList();
 		}
 
 		public void SupprimerProjet(Projet projet)
